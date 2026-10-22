@@ -1,0 +1,11 @@
+import {readFileSync,writeFileSync,mkdirSync} from 'node:fs';
+import {resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+const read=p=>readFileSync(resolve(root,p),'utf8');
+const flatten=s=>s.replace(/^import .*?;\s*$/gm,'').replace(/^export /gm,'');
+const code=[flatten(read('shared/domain.mjs')),flatten(read('public/preview-client.mjs')),'globalThis.JUDGE_PREVIEW_CLIENT = new PreviewClient();',flatten(read('public/api.mjs')),flatten(read('public/studio.mjs')),flatten(read('public/production.mjs')),flatten(read('public/advanced.mjs')),flatten(read('public/governance.mjs')),flatten(read('public/waves.mjs')),flatten(read('public/i18n.mjs')),flatten(read('public/app.mjs'))].join('\n');
+let html=read('public/index.html').replace('<link rel="icon" href="/favicon.svg" type="image/svg+xml">','').replace('<link rel="stylesheet" href="/styles.css">',`<style>${read('public/styles.css')}</style>`).replace('<script type="module" src="/app.mjs"></script>',`<script>\n${code.replace(/<\/script/gi,'<\\/script')}\n</script>`);
+mkdirSync(resolve(root,'dist'),{recursive:true});
+writeFileSync(resolve(root,'dist/JUDGE-ADVERSE-preview.html'),html);
+console.log('Built dist/JUDGE-ADVERSE-preview.html (offline, local storage only)');
