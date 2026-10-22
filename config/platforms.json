@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A",
+    "name": "Platform A",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "B",
+    "name": "Platform B",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "C",
+    "name": "Platform C",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "D",
+    "name": "Platform D",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "E",
+    "name": "Platform E",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "F",
+    "name": "Platform F",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  },
+  {
+    "id": "G",
+    "name": "Platform G",
+    "mode": "clipboard",
+    "verified": false,
+    "url": null,
+    "credentialEnv": null
+  }
+]
