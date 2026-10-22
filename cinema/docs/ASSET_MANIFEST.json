@@ -1,0 +1,390 @@
+{
+  "title": "ADVERSE JUDGE — Cinematic Interactive Experience",
+  "version": "1.0.0",
+  "source_materials": "AI-generated design-board crops and original algorithmically rendered sci-fi environments; no licensed third-party audio or cinematic video",
+  "quality_policy": "Honest source dimensions; do not describe these as native 4K/8K or photorealistic movie footage",
+  "display": "responsive cover; desktop up to 1440x900 from files; mobile 720x1080; browser can rescale",
+  "fallback": "CSS gradients if a media asset fails",
+  "assets": [
+    {
+      "filename": "assets/aftermath-mobile.webp",
+      "asset_key": "aftermath",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 32544,
+      "sha256": "e2f031dd34e810334f9d0eb236525e5ffd40b4b829ca7074b796bd38054ae195",
+      "original_crop_resolution": [
+        515,
+        420
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/aftermath.webp",
+      "asset_key": "aftermath",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 61998,
+      "sha256": "ca1ef8645b88a18422cdeae27039277b5d6ef16ff72ba9aa14bb193dca8cc309",
+      "original_crop_resolution": [
+        515,
+        420
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/archive-mobile.webp",
+      "asset_key": "archive",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 34038,
+      "sha256": "c93ce4c183e7ddf84ba926c81a0e73355c1e927a1593dac22f6898401c5a0ade",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/archive.webp",
+      "asset_key": "archive",
+      "output_resolution": [
+        1600,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 60334,
+      "sha256": "96dc5defc348bf85d5dc94b1224c5e8492397c2340db9a6a882b19d678cec503",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": false,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/chamber-mobile.webp",
+      "asset_key": "chamber",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 12428,
+      "sha256": "c42d2554f474d1254d69ba64c06982d6dc3222ba70038c0bfb69cc69718f35eb",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/chamber.webp",
+      "asset_key": "chamber",
+      "output_resolution": [
+        1600,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 27654,
+      "sha256": "43834a4291fbbdb49ef47b000d730bdf2fd6523726f04ea154a68daea7493a9c",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": false,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/city-mobile.webp",
+      "asset_key": "city",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 27764,
+      "sha256": "73b1b6f86d6e3529352dd15f89d336613cf049e6849df4d711330e1067509052",
+      "original_crop_resolution": [
+        595,
+        370
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/city.webp",
+      "asset_key": "city",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 77852,
+      "sha256": "66d9eb4200603e9d42256a7f30e96319d4a3d4d08422f4e5e63186a4e3e66edc",
+      "original_crop_resolution": [
+        595,
+        370
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/hall-mobile.webp",
+      "asset_key": "hall",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 53986,
+      "sha256": "67fc2cbbb6f7d6655845f6075da7d3a4f1c81d0022635be917743298707014f1",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/hall.webp",
+      "asset_key": "hall",
+      "output_resolution": [
+        1600,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 112272,
+      "sha256": "699f0ce0482c224aced327b56a3f7b0fd8b2d91ec00cce828d5d980e683b31bd",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": false,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/human-mobile.webp",
+      "asset_key": "human",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 29134,
+      "sha256": "a1a3b3baabe3dbe85e837a62266918b74f71ddddedb737baaed6a9c791b10554",
+      "original_crop_resolution": [
+        220,
+        140
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/human.webp",
+      "asset_key": "human",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 56466,
+      "sha256": "4efd9da9f49bbab1eebc40c3fe4e8d41357459f52773e5d0b6c00f90b6e88b33",
+      "original_crop_resolution": [
+        220,
+        140
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/skyline-mobile.webp",
+      "asset_key": "skyline",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 51242,
+      "sha256": "4ed33df0d6244a83b4363d96320f84d79548295a854b4e5bcbe465c6fb5a48f6",
+      "original_crop_resolution": [
+        700,
+        411
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/skyline.webp",
+      "asset_key": "skyline",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 100534,
+      "sha256": "fd2cabe73f59bacb629cc217732c7bb44a2e3c7176cf210c074c04baca8af11d",
+      "original_crop_resolution": [
+        700,
+        411
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/tribunal-light-mobile.webp",
+      "asset_key": "tribunal-light",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 40688,
+      "sha256": "012f891a95da1e68078527bf0e866e0909cd7088da5f43be7771a2a11ea3308a",
+      "original_crop_resolution": [
+        350,
+        290
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/tribunal-light.webp",
+      "asset_key": "tribunal-light",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 70390,
+      "sha256": "c25ff6f8a00110d9a0d0477c11dcfc6a48567c1892416692d58e848f548362f8",
+      "original_crop_resolution": [
+        350,
+        290
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/vantage-mobile.webp",
+      "asset_key": "vantage",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 30660,
+      "sha256": "4de12db87256fc1a3e8eee6996ddd8186029d6e48db2559d6c06e3f5091a7795",
+      "original_crop_resolution": [
+        175,
+        203
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/vantage.webp",
+      "asset_key": "vantage",
+      "output_resolution": [
+        1440,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 44726,
+      "sha256": "17a51bd72357d1c80294732a5d989ac42b4e3c454ce64465495f736750f1178c",
+      "original_crop_resolution": [
+        175,
+        203
+      ],
+      "source_type": "crop_from_generated_design_board",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "LANCZOS-upsample from a small composition crop; use as concept placeholder, not genuine 8K"
+    },
+    {
+      "filename": "assets/verdict-mobile.webp",
+      "asset_key": "verdict",
+      "output_resolution": [
+        720,
+        1080
+      ],
+      "format": "WebP",
+      "bytes": 28896,
+      "sha256": "d53aea808442f8021dbcc171b4f6b2e8e2b5fda2677ec3f42b51244281cdba0f",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": true,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    },
+    {
+      "filename": "assets/verdict.webp",
+      "asset_key": "verdict",
+      "output_resolution": [
+        1600,
+        900
+      ],
+      "format": "WebP",
+      "bytes": 60374,
+      "sha256": "ee1ded3d7557640c1a70b86d44b9f6ed9c50fbe79b13c5a05fafc41316473756",
+      "original_crop_resolution": [
+        1600,
+        900
+      ],
+      "source_type": "original_procedural_illustration",
+      "resampling_used": false,
+      "claimed_8k": false,
+      "quality_note": "Original procedural bitmap at 1600x900; mobile image derived by crop and resize"
+    }
+  ]
+}

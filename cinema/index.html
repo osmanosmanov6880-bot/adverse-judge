@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080e19">
+  <meta name="description" content="ADVERSE JUDGE — интерактивное кинематографическое расследование рекламного обещания. 15 сцен, реальные развилки, личный бриф.">
+  <title>ADVERSE JUDGE — THE TRIAL OF PROMISES</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="mode-cinematic">
+  <a class="skip-link" href="#story-main">Пропустить оформление и перейти к истории</a>
+  <div id="cinema-app" class="cinema-app" data-mode="cinematic">
+    <div id="backdrop" class="backdrop" aria-hidden="true">
+      <div class="backdrop-gradient"></div><div class="plate-layer plate-prev" id="plate-prev"></div><div class="plate-layer plate-active" id="plate-active"></div>
+      <div class="cinema-vignette"></div><div class="architecture-grid"></div><div class="fog-layer"></div>
+      <div class="light-ray"></div><div class="particles" id="particles"></div><div class="grain"></div>
+    </div>
+    <header class="masthead" role="banner">
+      <a class="brand" id="brand-home" href="#scene_001" aria-label="ADVERSE JUDGE — вернуться к началу">
+        <span class="brand-mark" aria-hidden="true">✦</span><span class="brand-name">ADVERSE <strong>JUDGE</strong><small>THE TRIAL OF PROMISES</small></span>
+      </a>
+      <span class="meta-tag">ИНТЕРАКТИВНЫЙ ФИЛЬМ / ДЕЛО 001</span>
+      <div class="tools">
+        <button class="tool-btn" type="button" id="sound-toggle" aria-pressed="false" aria-label="Включить звук" title="Включить или выключить звук"><span aria-hidden="true" id="sound-icon">♫</span></button>
+        <button class="tool-btn" type="button" id="mode-toggle" aria-label="Переключить качество графики" title="Режим графики"><span aria-hidden="true">◐</span><span id="mode-label" class="tool-label">CINEMATIC</span></button>
+        <button class="tool-btn" type="button" id="map-toggle" aria-label="Открыть карту истории" title="Карта сцен">☷</button>
+        <button class="tool-btn" type="button" id="settings-toggle" aria-label="Открыть настройки" title="Настройки">⚙</button>
+      </div>
+    </header>
+    <div class="chapter-rail" aria-hidden="true"><span class="rail-vertical">ADVERSE / CHAPTER 001</span><span class="rail-line"></span><span class="rail-star">✦</span></div>
+    <main id="story-main" class="story-main" tabindex="-1">
+      <div class="eyebrow-wrap"><span class="eyebrow-line"></span><span class="scene-eyebrow" id="scene-eyebrow">ДЕЛО № 001</span></div>
+      <div class="story-copy" id="story-copy" aria-live="polite"></div>
+      <div class="interaction-zone" id="interaction-zone"></div>
+    </main>
+    <div class="scene-artifact" id="scene-artifact" aria-hidden="true"><div class="artifact-circle"></div><div class="artifact-core">J</div><div class="artifact-label">TRUTH / 001</div></div>
+    <button type="button" class="secret-tag" id="secret-tag" hidden></button>
+    <footer class="transport" role="navigation" aria-label="Управление историей">
+      <div class="transport-top"><span class="transport-status" id="transport-status">ПРОЛОГ</span><span class="transport-caption" id="subtitle-status" aria-live="off">Нажмите «Войти в историю»</span><span class="transport-clock" id="scene-count">01 / 15</span></div>
+      <div class="timeline"><div class="timeline-fill" id="timeline-fill"></div><div class="timeline-notches" id="timeline-notches" aria-hidden="true"></div></div>
+      <div class="transport-bottom">
+        <button type="button" class="transport-btn" id="back-btn" aria-label="Предыдущая сцена" disabled><span aria-hidden="true">←</span> Назад</button>
+        <div class="transport-center"><span id="progress-label">0% ИСТОРИИ</span><span class="transport-separator">✧</span><span id="persist-status">ПРОГРЕСС ЛОКАЛЬНО</span></div>
+        <button type="button" class="transport-btn" id="dossier-btn">ДОСЬЕ <span aria-hidden="true">↗</span></button>
+      </div>
+    </footer>
+    <div class="micro-label">A FILM ABOUT THE WEIGHT OF WORDS · NO TRACKING · NO AUTO-PLAY</div>
+  </div>
+  <div class="dialog-layer" id="dialog-layer" hidden>
+    <div class="dialog-scrim" data-close-dialog="true"></div>
+    <section class="dialog-box" role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+      <button type="button" class="dialog-close" id="dialog-close" aria-label="Закрыть окно">×</button>
+      <div class="dialog-kicker" id="dialog-kicker">THE TRIBUNAL</div>
+      <h2 id="dialog-title">Досье</h2>
+      <div id="dialog-content"></div>
+    </section>
+  </div>
+  <div class="toast" role="status" aria-live="polite" id="toast" hidden></div>
+  <script src="src/data.js"></script>
+  <script src="src/engine.js"></script>
+  <script src="src/sound.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
