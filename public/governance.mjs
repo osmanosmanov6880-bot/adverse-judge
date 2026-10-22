@@ -1,0 +1,64 @@
+/** JUDGE waves 16-20: server-backed governance; no fake production delivery. */
+export function makeGovernance({client,esc,B,I,shell,heading,showModal,closeModal,toast,download,boot,navigate}) {
+ const e=esc;let current=null;
+ const send=(cid,action,body)=>client.request('/governance/campaigns/'+cid+'/'+action,{method:'POST',body});
+ const panel=(wave,title,sub,content)=>`<section id="gov-wave-${wave}" class="card governance-card"><div class="gov-card-head"><span class="eyebrow">WAVE ${wave} · GOVERNANCE</span><h2>${e(title)}</h2><p class="panel-sub">${e(sub)}</p></div>${content}</section>`;
+ const option=(v,label)=>`<option value="${e(v)}">${e(label)}</option>`;
+ async function detail(cid){
+  if(boot()?.mode==='preview'){shell(`${heading('Контроль рисков','Для этого экрана требуется сервер JUDGE.')}<section class="card"><p>Автономное демо не создаёт фиктивных рисков, расходных отчётов или передач.</p><a href="#/campaigns" class="btn primary">Вернуться к кампаниям</a></section>`,'Контроль рисков','campaigns');return;}
+  current=await client.request('/governance/campaigns/'+cid);const p=current,edit=p.role!=='viewer',owner=p.role==='owner';
+  const crOptions=p.creatives.map(c=>option(c.id,`${c.language.toUpperCase()} / ${c.channel} — ${c.headline.slice(0,45)}`)).join('');
+  const evOptions=p.evidence.filter(x=>x.reviewStatus==='reviewed').map(x=>option(x.id,x.statement.slice(0,72))).join('');
+  const noEdit='<p class="source-note">Действие доступно редактору или владельцу пространства.</p>';
+  const riskList=p.issues.map(x=>`<article class="gov-listitem"><div><span class="pill ${x.severity==='critical'?'amber':''}">${e(x.severity.toUpperCase())}</span> <strong>${e(x.title)}</strong> <small>${e(x.status)}</small><p>${e(x.details)}</p>${x.resolutionNote?`<small>Решение: ${e(x.resolutionNote)}</small>`:''}</div>${edit&&x.status==='open'?B('Рассмотреть','gov-resolve','small ghost',`data-id="${e(x.id)}"`):''}</article>`).join('')||'<p class="source-note">Открытых замечаний нет. Это не означает, что рекламные материалы безопасны автоматически.</p>';
+  const traces=p.traces.map(t=>`<article class="gov-listitem"><div><strong>${e(t.statement)}</strong><small>${e(t.creativeId.slice(0,8))} → ${e(t.evidenceId.slice(0,8))} · ${t.valid?'Основание актуально':'Источник требует перепроверки'}</small></div>${edit?B('Отвязать','gov-unlink','small ghost',`data-creative="${e(t.creativeId)}" data-evidence="${e(t.evidenceId)}"`):''}</article>`).join('');
+  const gate=p.gates.map(x=>`<span class="gov-gate">${e(x)}</span>`).join('');
+  const budget=p.budget;
+  const basic=`${heading('Операционный контроль','Пять инженерных волн: доказательства, риски, бюджет, аварийная остановка, аудит.',`<a class="btn ghost" href="#/ops/${e(cid)}">${I('back')} Центр выпуска</a>`)}<div class="gov-overview"><div class="gov-stat"><small>Версия кампании</small><strong>${p.revision}</strong></div><div class="gov-stat"><small>Открытые критические риски</small><strong>${p.issues.filter(x=>x.severity==='critical'&&x.status==='open').length}</strong></div><div class="gov-stat"><small>Проверки выпуска</small><strong>${p.gates.length?'Требуются':'Пройдены'}</strong></div><div class="gov-stat"><small>Передачи</small><strong>${p.control.dispatchPaused?'ОСТАНОВЛЕНЫ':'Разрешены'}</strong></div></div>${gate?`<div class="notice amber gov-gates" role="status">${gate}</div>`:'<p class="notice">Дополнительных блокировок governance не обнаружено. Это не юридическое или внешнее подтверждение.</p>'}<div class="gov-jump">${[16,17,18,19,20].map(n=>`<button type="button" data-action="gov-jump" data-target="gov-wave-${n}">WAVE ${n}</button>`).join('')}</div>`;
+  const w16=panel(16,'Связь креатива с доказательствами','Укажите, какое человечески проверенное основание поддерживает каждый рекламный вариант. Можно включить обязательность этой связи.',`
+    <p><strong>Обязательное сопоставление:</strong> ${p.requireMapping?'Включено':'Необязательно'}</p>
+    ${owner?`<form id="gov-policy-form" class="gov-form"><label class="checkbox"><input type="checkbox" name="requireMapping" ${p.requireMapping?'checked':''}><span>Не допускать редакторское согласование, пока у каждого варианта нет актуального связанного основания.</span></label><button type="submit" class="btn ghost">Сохранить правило</button></form>`:noEdit}
+    ${p.creatives.length&&p.evidence.length&&edit?`<form id="gov-bind-form" class="gov-form"><label>Рекламный вариант</label><select name="creativeId" required>${crOptions}</select><label>Просмотренное основание</label><select name="evidenceId" required>${evOptions}</select><p class="source-note">Источник должен относиться к тому же исходному брифу. JUDGE проверит это сервером.</p><button type="submit" class="btn primary" ${evOptions?'':'disabled'}>Связать с основанием</button></form>`:'<p class="source-note">Для привязки сначала добавьте креатив и независимую проверку источника в кампании.</p>'}
+    <div class="gov-list">${traces||'<p class="source-note">Пока нет привязок.</p>'}</div>`);
+  const w17=panel(17,'Реестр проблем и рисков','Критические открытые замечания останавливают редакторское согласование. Автор критического замечания не может сам закрыть его.',`
+    ${edit?`<form id="gov-issue-form" class="gov-form"><label>Тема проблемы</label><input name="title" minlength="5" maxlength="140" required placeholder="Например: слишком сильное обещание"><label>Влияние</label><select name="severity">${option('critical','Критическое — блокирует выпуск')}${option('major','Существенное — предупреждение')}${option('minor','Незначительное — замечание')}</select><label>Объяснение</label><textarea name="details" required minlength="10" maxlength="800" placeholder="В чём риск и как его проверить?"></textarea><button type="submit" class="btn primary">Зарегистрировать риск</button></form>`:noEdit}
+    <div class="gov-list">${riskList}</div>`);
+  const w18=panel(18,'Бюджет и расходная дисциплина','Лимит задаётся владельцем. Расходы берутся только из ручной отчётности и не считаются подтверждёнными площадкой.',`
+    ${budget?`<div class="gov-budget"><div><small>Лимит</small><strong>${(budget.capMinor/100).toFixed(2)} ${e(budget.currency)}</strong></div><div><small>Заявлено расходов</small><strong>${(budget.reportedMinor/100).toFixed(2)} ${e(budget.currency)}</strong></div><div><small>Режим</small><strong>${e(budget.mode==='hold'?'Блокировать при превышении':'Предупреждать')}</strong></div></div><p class="${budget.exceeded?'notice amber':'source-note'}">${budget.exceeded?'Заявленный лимит превышен.':'Согласно введённым данным лимит не превышен.'} ${e(budget.disclaimer)}</p>`:'<p>Бюджетный лимит не установлен.</p>'}
+    ${owner?`<form id="gov-budget-form" class="gov-form"><div class="gov-fields"><div><label>Лимит в сотых долях валюты</label><input type="number" name="capMinor" min="100" step="1" max="100000000000" value="${budget?.capMinor??100000}" required></div><div><label>Валюта</label><select name="currency">${['EUR','USD','SEK','GBP'].map(x=>`<option ${budget?.currency===x?'selected':''}>${x}</option>`).join('')}</select></div></div><label>Поведение при превышении</label><select name="mode"><option value="warn" ${budget?.mode==='warn'?'selected':''}>Только предупреждение</option><option value="hold" ${budget?.mode==='hold'?'selected':''}>Блокировать новый выпуск и передачу</option></select><button type="submit" class="btn primary">Сохранить бюджет</button></form>`:'<p class="source-note">Лимит может менять только владелец пространства.</p>'}`);
+  const w19=panel(19,'Аварийная остановка интеграций','Владелец пространства может остановить все будущие получения пакетов внешними платформами. Уже полученные данные отозвать удалённо невозможно.',`
+    <div class="notice ${p.control.dispatchPaused?'amber':''}"><strong>${p.control.dispatchPaused?'Передачи приостановлены':'Аварийная остановка не активна'}</strong>${p.control.reason?`<p>${e(p.control.reason)}</p>`:''}</div>
+    ${owner?`<form id="gov-control-form" class="gov-form"><label>Причина операции</label><textarea required name="reason" minlength="10" maxlength="300" placeholder="Почему нужно изменить режим передачи пакетов?"></textarea><label class="checkbox"><input type="checkbox" name="acknowledged" required><span>Понимаю, что уже полученные партнёром материалы нельзя отозвать через JUDGE.</span></label><input type="hidden" name="dispatchPaused" value="${p.control.dispatchPaused?'false':'true'}"><button type="submit" class="btn ${p.control.dispatchPaused?'primary':'danger'}">${p.control.dispatchPaused?'Возобновить новые передачи':'Остановить передачи и отозвать неиспользованные токены'}</button></form>`:'<p class="source-note">Доступно только владельцу рабочего пространства.</p>'}`);
+  const w20=panel(20,'Проверяемый внутренний аудит','Скачать состояние согласований, рисков, хешей выпусков и бюджета. Экспорт не является внешним подтверждением или цифровой подписью.',`
+    <div class="button-row">${edit?B(I('download')+' Скачать аудит JSON','gov-audit','primary'):''}${B('Общий статус рабочего пространства','gov-portfolio','ghost')}</div>
+    <p class="source-note">Файл содержит внутренние сведения о кампании. Для его проверки используйте включённую в архив команду verify-governance.</p>`);
+  shell(`${basic}<div class="gov-stack">${w16}${w17}${w18}${w19}${w20}</div>`,'Контроль рисков','campaigns');
+ }
+ async function portfolio(wid){if(boot()?.mode==='preview'){navigate('/campaigns');return;}
+  const p=await client.request('/governance/workspaces/'+wid+'/portfolio');
+  shell(`${heading('Состояние рабочего пространства',`Реальные данные JUDGE: ${p.total} кампаний, ${p.withBlockers} с блокирующими условиями.`,`<a href="#/workspaces" class="btn ghost">Команды</a>`)}<section class="card"><h2>${p.control.dispatchPaused?'Передачи остановлены владельцем':'Передачи не остановлены'}</h2><p class="source-note">${e(p.disclaimer)}</p></section><div class="gov-list">${p.campaigns.map(x=>`<a class="gov-portfolio-row" href="#/governance/${e(x.id)}"><span><strong>${e(x.name)}</strong><small>${e(x.status)} · редакция ${x.revision} · блокеры: ${x.gates.length}</small></span>${I('arrow')}</a>`).join('')||'<p class="source-note">Кампаний ещё нет.</p>'}</div>`,'Состояние пространства','campaigns');
+ }
+ async function action(name,b){const cid=current?.campaignId;if(!name.startsWith('gov-'))return false;
+  if(name==='gov-jump'){document.getElementById(b.dataset.target)?.scrollIntoView({behavior:'smooth',block:'start'});return true;}
+  if(name==='gov-portfolio'){navigate('/governance-workspace/'+current.workspaceId);return true;}
+  if(name==='gov-audit'){const res=await client.request('/governance/campaigns/'+cid+'/audit-bundle');download(`ADVERSE-audit-${cid.slice(0,8)}.json`,JSON.stringify(res,null,2),'application/json;charset=utf-8');toast('Аудит скачан. Храните его в защищённом месте.');return true;}
+  if(name==='gov-resolve'){showModal('Независимая проверка риска',`<form id="gov-resolve-form" data-id="${e(b.dataset.id)}"><p>Закрытие критической проблемы требует другого редактора. Решение сохранится в истории.</p><label>Какие действия устранили риск?</label><textarea name="note" minlength="15" maxlength="800" required></textarea><button type="submit" class="btn primary full">Зафиксировать решение</button></form>`);return true;}
+  if(name==='gov-unlink'){await send(cid,'unlink',{expectedRevision:current.revision,creativeId:b.dataset.creative,evidenceId:b.dataset.evidence});await detail(cid);toast('Связь удалена, согласование потребуется повторить.');return true;}
+  return false;
+ }
+ async function submit(form,d){if(!form.id.startsWith('gov-'))return false;
+  const p=current,cid=p.campaignId,expectedRevision=p.revision;
+  if(form.id==='gov-policy-form')await send(cid,'policy',{expectedRevision,requireMapping:d.requireMapping==='on'});
+  if(form.id==='gov-bind-form')await send(cid,'link',{expectedRevision,creativeId:d.creativeId,evidenceId:d.evidenceId});
+  if(form.id==='gov-issue-form')await send(cid,'issue',{expectedRevision,severity:d.severity,title:d.title,details:d.details});
+  if(form.id==='gov-resolve-form')await send(cid,'issue-resolve',{expectedRevision,issueId:form.dataset.id,note:d.note});
+  if(form.id==='gov-budget-form')await send(cid,'budget',{expectedRevision,currency:d.currency,capMinor:Number(d.capMinor),mode:d.mode});
+  if(form.id==='gov-control-form'){
+    if(d.acknowledged!=='on')throw new Error('Требуется подтверждение последствий.');
+    const r=await client.request('/governance/workspaces/'+p.workspaceId+'/control',{method:'POST',body:{dispatchPaused:d.dispatchPaused==='true',reason:d.reason}});
+    toast(r.dispatchPaused?`Остановлено. Отозвано новых передач: ${r.revokedUnclaimed}`:'Передачи возобновлены.');
+  }
+  closeModal();await detail(cid);toast('Изменения сохранены с новой историей решений.');return true;
+ }
+ return {detail,portfolio,action,submit};
+}
