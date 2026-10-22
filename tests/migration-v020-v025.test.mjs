@@ -1,0 +1,24 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {mkdtempSync,copyFileSync,rmSync} from 'node:fs';import {tmpdir} from 'node:os';import {join,resolve} from 'node:path';
+import {Store} from '../server/store.mjs';import {JudgeService} from '../server/service.mjs';
+import {WorkspaceService} from '../server/workspaces.mjs';import {ProductionService} from '../server/production.mjs';import {AdvancedService} from '../server/advanced.mjs';import {GovernanceService} from '../server/governance.mjs';
+const old=resolve('tests/fixtures/v020.sqlite');
+test('real v0.20 SQLite schema 17 migrates to schema 22 and preserves old release and ledger',t=>{
+ const dir=mkdtempSync(join(tmpdir(),'judge-v020-v025-'));t.after(()=>rmSync(dir,{recursive:true,force:true}));const file=join(dir,'copy.sqlite');copyFileSync(old,file);
+ const db=new Store(file);t.after(()=>db.close());
+ assert.equal(db.one('PRAGMA user_version').user_version,28);
+ assert.equal(db.one('SELECT COUNT(*) AS n FROM campaign_releases').n,1);
+ assert.equal(db.one('SELECT COUNT(*) AS n FROM campaign_observations').n,1);
+ assert.equal(db.one('SELECT COUNT(*) AS n FROM users').n,2);
+ const orig=db.one('SELECT * FROM campaign_releases'),judge=new JudgeService(db),ws=new WorkspaceService(judge),prod=new ProductionService(judge,ws),adv=new AdvancedService(prod,judge),gov=new GovernanceService(prod,adv);
+ prod.advanced=adv;prod.governance=gov;adv.governance=gov;
+ assert.equal(prod.exportRelease('migration-owner',orig.campaign_id,orig.id).sha256,orig.digest);
+ const cid=orig.campaign_id;
+ assert.equal(gov.detail('migration-owner',cid).issues.length,0);
+ assert.equal(gov.portfolio('migration-owner',db.one('SELECT id FROM workspaces').id).total,1);
+ const caseId=db.one('SELECT id FROM cases').id;assert.equal(judge.assertIntegrity('migration-owner',caseId)?.consistent??true,true);
+ assert.equal(prod.detail('migration-owner',cid).campaign.status,'approved');
+ const current=gov.detail('migration-owner',cid);
+ gov.policy('migration-owner',cid,{expectedRevision:current.revision,requireMapping:true});
+ assert.ok(gov.detail('migration-owner',cid).gates.some(x=>x.startsWith('UNTRACED_CREATIVE')));
+});
