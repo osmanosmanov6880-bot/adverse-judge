@@ -194,6 +194,21 @@
     const btn=el('button','mini-action','Открыть полный бриф ↗');btn.type='button';btn.addEventListener('click',openDossier);box.appendChild(btn);
     return box;
   }
+  function networkContinuation(){
+    const card=el('aside','marcosa-ending-continuation');
+    card.setAttribute('aria-label','Добровольное продолжение истории в MARCOSA');
+    add(card,
+      el('small','marcosa-ending-eyebrow','MARCOSA / НЕЗАВИСИМЫЕ ИСТОРИИ'),
+      el('h2','marcosa-ending-title','История не заканчивается одним судом.'),
+      el('p','marcosa-ending-copy','Другие миры и сюжеты находятся на отдельной платформе MARCOSA. Никакой текст дела, выбор или личные данные не отправляются туда автоматически.')
+    );
+    const link=el('a','marcosa-ending-link','ИССЛЕДОВАТЬ MARCOSA ↗');
+    link.href='https://marcosa.club/';
+    link.target='_blank';
+    link.rel='noopener noreferrer';
+    card.appendChild(link);
+    return card;
+  }
   function render(){
     const scene=E.sceneOf(state);
     $('cinema-app').classList.toggle('tone-red',scene.tone==='red');
@@ -219,6 +234,8 @@
       button.addEventListener('click',()=>handleChoice(i));choices.appendChild(button);
     });
     zone.appendChild(choices);
+    // Only final scene 015: never interrupt the dossier or fact-check workflow.
+    if(scene.id==='scene_015')zone.appendChild(networkContinuation());
     $('transport-status').textContent=scene.chapter;
     $('scene-count').textContent=scene.number+' / '+String(D.scenes.length).padStart(2,'0');
     $('subtitle-status').textContent=scene.sub;
