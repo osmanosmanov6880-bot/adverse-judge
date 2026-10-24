@@ -1,0 +1,6 @@
+{
+  "name": "adverse-judge-cinema",
+  "private": true,
+  "type": "commonjs",
+  "description": "Isolated standalone CJS cinema engine and tests; backend remains ESM"
+}

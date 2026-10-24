@@ -12,3 +12,4 @@ jobs:
           node-version: '22'
       - run: npm test
       - run: node --test cinema/tests/engine.test.js
+      - run: node --test cinema/tests/network-bridge.test.mjs

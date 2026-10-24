@@ -40,3 +40,13 @@
 .transfer-consent{display:flex;align-items:flex-start;gap:12px;margin:20px 0;padding:15px;border:1px solid rgba(197,169,119,.35);border-radius:12px;background:rgba(197,169,119,.10);font-size:14px;line-height:1.65}.transfer-consent input{width:19px;height:19px;flex:none;margin-top:2px;accent-color:#c5a977}
 /* v1.1 mobile correction: archive marker must never cover decision controls. */
 @media(max-width:560px){.secret-tag{top:77px;bottom:auto;right:15px;max-width:210px;min-height:32px;padding:7px 11px;font-size:9px;letter-spacing:.025em;z-index:12}}
+
+/* Network OS: optional continuation only after cinema epilogue, no analytics. */
+.marcosa-ending-continuation{margin-top:25px;padding:23px;border-radius:12px;border:1px solid rgba(230,194,136,.62);background:linear-gradient(125deg,rgba(33,45,58,.95),rgba(17,24,40,.96));box-shadow:0 10px 32px #0002;color:#f1e6d3}
+.marcosa-ending-eyebrow{display:block;font-size:10px;font-weight:800;letter-spacing:.13em;color:#d9bb82}
+.marcosa-ending-title{font:normal clamp(20px,2vw,28px)/1.25 Georgia,serif;margin:10px 0;color:#ffdeac}
+.marcosa-ending-copy{color:#cbd3d6;font-size:13px;line-height:1.65;max-width:52ch}
+.marcosa-ending-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:11px 19px;border:1px solid #f4d9a5;border-radius:8px;text-decoration:none;font-size:12px;font-weight:800;background:linear-gradient(125deg,#f0d7ad,#d1ac8c);color:#182233}
+.marcosa-ending-link:hover{background:#ffe5bd}
+.marcosa-ending-link:focus-visible{outline:3px solid #e4b476;outline-offset:4px}
+@media(max-width:550px){.marcosa-ending-continuation{padding:17px}.marcosa-ending-link{width:100%;text-align:center}}
